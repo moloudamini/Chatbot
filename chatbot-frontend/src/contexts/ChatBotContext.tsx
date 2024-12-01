@@ -38,7 +38,7 @@ interface ChatBotContextProps {
   formatTimestamp: (timestamp: Date) => string;
 }
 
-// Initial message from bot
+//Initial message from bot
 const initialMessages: Message[] = [
   {
     sender: "bot",
@@ -57,7 +57,7 @@ interface ChatBotProviderProps {
   children: ReactNode;
 }
 
-// ChatBotProvider component to provide chat context to children
+//ChatBotProvider component to provide chat context to children
 export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
   children,
 }) => {
@@ -75,7 +75,6 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  //To scroll to the bottom
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
@@ -85,7 +84,7 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     document.body.classList.toggle("dark-mode", darkMode);
   }, [darkMode]);
 
-  //To send message
+  //Send message
   const sendMessage = async () => {
     if (!input.trim()) return;
     //User message object
@@ -122,7 +121,7 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
         timestamp: new Date(),
       };
 
-      // Simulate typing delay before adding the bot's reply to messages (real thinking for bot)
+      //Simulate typing delay before adding the bot's reply to messages (real thinking for bot)
       const typingDelay = Math.max(1000, botReply.text.length * 50);
       setTimeout(() => {
         setMessages((prev) => [...prev, botReply]);
@@ -141,7 +140,6 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     }
   };
 
-  //To handle clicks outside the menu to close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -156,7 +154,7 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     return () => document.removeEventListener("click", handleClickOutside);
   }, [menuOpen]);
 
-  //To format timestamps for display
+  //Format timestamps for display
   const formatTimestamp = (timestamp: Date): string => {
     const now = new Date();
     const isToday =
@@ -177,13 +175,13 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     return timestamp.toLocaleString([], options);
   };
 
-  // To add an emoji
+  //Add an emoji
   const addEmojiToInput = (emoji: { native: string }) => {
     setInput((prevInput) => prevInput + emoji.native);
     setShowEmojiPicker(false);
   };
 
-  // To export chat converastion as a text file
+  //Export chat converastion as a text file
   const exportConversation = () => {
     const formatDateForFilename = (date: Date): string => {
       const year = date.getFullYear();
@@ -201,7 +199,7 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
       )
       .join("\n");
 
-    // Create a Blob from the message text
+    //Create a Blob from the message text
     const blob = new Blob([messageText], { type: "text/plain" });
     const filenameDate = formatDateForFilename(new Date());
     const filename = `chat-history-${filenameDate}-${Date.now()}.txt`;
@@ -214,7 +212,7 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     URL.revokeObjectURL(url);
   };
 
-  // Provide the context values to children
+  //Provide the context values to children
   return (
     <ChatBotContext.Provider
       value={{

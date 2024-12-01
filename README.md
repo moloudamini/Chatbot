@@ -4,11 +4,11 @@ This project consists of a **backend** built with **FastAPI** (Python) and a **f
 
 ### Light Mode
 
-![Light Mode Screenshot](assets/light.png)
+![Light Mode Screenshot](assets/lightmode.png)
 
 ### Dark Mode
 
-![Dark Mode Screenshot](assets/dark.png)
+![Dark Mode Screenshot](assets/darkmode.png)
 
 ## Backend Setup (Python with FastAPI)
 

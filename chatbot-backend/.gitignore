@@ -1,0 +1,47 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment directories
+venv/
+ENV/
+env/
+.venv/
+
+# Logs
+logs/
+*.log
+
+# MacOS specific files
+.DS_Store
+
+# Editor and IDE files
+*.swp
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables
+.env
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# pytest
+.cache/
+.pytest_cache/
+
+# Mypy
+.mypy_cache/
+
+# Pyre
+.pyre/
+
+# Build and distribution directories
+build/
+dist/
+*.egg-info/

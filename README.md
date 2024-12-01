@@ -2,6 +2,14 @@
 
 This project consists of a **backend** built with **FastAPI** (Python) and a **frontend** built with **React** and **Tailwind CSS**. The backend serves as an API that handles chat requests and responses, while the frontend provides an interface for users to interact with the chatbot.
 
+### Light Mode
+
+![Light Mode Screenshot](assets/light.png)
+
+### Dark Mode
+
+![Dark Mode Screenshot](assets/dark.png)
+
 ## Backend Setup (Python with FastAPI)
 
 The backend of the chatbot is built with **FastAPI** (Python). It provides the API that the frontend will interact with to send and receive chat messages.
@@ -80,7 +88,7 @@ The frontend of the chatbot is built with React. It communicates with the backen
 
    ```bash
    touch .env => add REACT_APP_API_URL=http://localhost:8000 in .env file
-    npm start
+   npm start
    ```
 
 4. Testing and coverage

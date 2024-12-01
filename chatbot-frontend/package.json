@@ -7,6 +7,7 @@
     "@types/jest": "^29.5.3",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
+    "history": "^5.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
@@ -45,7 +46,7 @@
     "jest-fetch-mock": "^3.0.3",
     "postcss": "^8.x",
     "postcss-loader": "^8.1.1",
-    "react-router-dom": "^6.x.x",
+    "react-router-dom": "^7.0.1",
     "tailwindcss": "^3.x",
     "webpack": "^5.96.1"
   }

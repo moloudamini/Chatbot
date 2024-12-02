@@ -41,7 +41,7 @@ The backend of the chatbot is built with **FastAPI** (Python). It provides the A
     pip install -r requirements.txt
    ```
 
-4. Create .env file and add server URL to run app
+4. Create .env file 
 
    ```bash
    touch .env => add DEBUG=True ALLOWED_ORIGINS=http://localhost:3000 LOG_LEVEL=INFO in .env file

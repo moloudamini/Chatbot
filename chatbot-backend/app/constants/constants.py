@@ -1,20 +1,3 @@
-synonyms = {
-    'hi': 'hello',
-    'hey': 'hello',
-    'howdy': 'hello',
-    'bye': 'goodbye',
-    'good bye': 'goodbye',
-    'thanks': 'thank you',
-    'thx': 'thank you',
-    'help me': 'help',
-    'tell me story': 'tell me a story',
-    'tell me joke': 'tell me a joke',
-    'ok': 'okay',
-    'whats up': 'what is up',
-    'whats': 'what is',
-    'h r u': 'how are you'
-}
-
 prompts_to_replies = {
     "hello": ["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"],
     "how are you": ["I'm doing well, thank you!", "Fantastic, how are you?"],
@@ -61,3 +44,5 @@ alternative = [
     "Tell me more.",
     "I see."
 ]
+
+SIMILARITY_THRESHOLD = 0.75

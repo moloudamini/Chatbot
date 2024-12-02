@@ -35,7 +35,7 @@ The backend of the chatbot is built with **FastAPI** (Python). It provides the A
    source venv/bin/activate
    ```
 
-3. Create a virtual environment
+3. Install requirements
 
    ```bash
     pip install -r requirements.txt

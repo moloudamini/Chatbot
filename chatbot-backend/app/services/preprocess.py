@@ -55,8 +55,8 @@ def get_response(user_input: str) -> str:
     if similarity >= SIMILARITY_THRESHOLD:
         best_prompt = prompts[best_match_idx]
         response = random.choice(prompts_to_replies[best_prompt])
-        logger.debug(f"Matched Prompt: '{best_prompt}' | Response: '{response}'")
+        logger.info(f"Matched Prompt: '{best_prompt}' | Response: '{response}'")
         return response
     else:
-        logger.debug("No suitable match found. Using alternative response.")
+        logger.info("No suitable match found. Using alternative response.")
         return random.choice(alternative)

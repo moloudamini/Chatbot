@@ -6,9 +6,10 @@ parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
 sys.path.insert(0, parent_dir)
 
 from app.services.preprocess import preprocess_input, get_response
-from app.constants.constants import prompts_to_replies, alternative, SIMILARITY_THRESHOLD
+from app.constants.constants import prompts_to_replies, alternative
 from fastapi.testclient import TestClient
 from app.main import app
+from app.services.state import ConversationState
 
 client = TestClient(app)
 
@@ -99,3 +100,9 @@ def test_api_chat_long_message():
     assert response.status_code == 200
     assert response.json()["response"] in alternative, \
         f"API response '{response.json()['response']}' not in alternative responses"
+
+def test_add_message():
+    state = ConversationState()
+    state.add_message("Hello!")
+    state.add_message("How are you?")
+    assert state.get_context() == ["Hello!", "How are you?"]

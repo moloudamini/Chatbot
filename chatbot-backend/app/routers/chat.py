@@ -25,7 +25,7 @@ async def chat_endpoint(
     try:
         state.add_message(chat_request.message)
         context = state.get_context()
-        logger.info(f"Conversation context: {context}")
+        # logger.info(f"Conversation context: {context}")
         
         # Get response based on semantic embeddings and a FAISS index to retrieve the most relevant response from predefined prompts
         response_text = get_response(chat_request.message)

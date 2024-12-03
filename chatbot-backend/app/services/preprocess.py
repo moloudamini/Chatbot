@@ -1,6 +1,8 @@
 import logging
 import random
 import re
+from functools import lru_cache
+from typing import Optional
 
 from sentence_transformers import SentenceTransformer
 import faiss
@@ -32,6 +34,15 @@ def preprocess_input(user_input: str) -> str:
     user_input = user_input.strip()
     return user_input
 
+@lru_cache(maxsize=1000) 
+def get_user_embedding_cached(user_input: str) -> Optional[np.ndarray]:
+    if not user_input:
+        return None
+    
+    embedding = embedding_model.encode([user_input], convert_to_tensor=False)
+    normalized_embedding = embedding / np.linalg.norm(embedding, axis=1, keepdims=True)
+    return normalized_embedding.astype('float32')[0]
+
 # Get response
 def get_response(user_input: str) -> str:
     
@@ -39,18 +50,30 @@ def get_response(user_input: str) -> str:
     if not user_input:
         return random.choice(alternative)
     
-    # Generate embedding for user input
-    user_embedding = embedding_model.encode([user_input], convert_to_tensor=False)
-    user_embedding = user_embedding / np.linalg.norm(user_embedding, axis=1, keepdims=True)
+    # Retrieve cached embedding or compute if not cached
+    cache_info_before = get_user_embedding_cached.cache_info()
+    user_embedding = get_user_embedding_cached(user_input)
+    cache_info_after = get_user_embedding_cached.cache_info()
+    
+    if cache_info_after.hits > cache_info_before.hits:
+        logger.info(f"Cache hit for: '{user_input}'.")
+    else:
+        logger.info(f"Embedding for: '{user_input}'.")
+        
+    if user_embedding is None:
+        return random.choice(alternative)
+    
+    # Reshape for FAISS (needs 2D array)
+    user_embedding = user_embedding.reshape(1, -1)
     
     # Search for the most similar prompt
     k = 1  
-    D, I = faiss_index.search(user_embedding.astype('float32'), k)
+    D, I = faiss_index.search(user_embedding, k)
     
     similarity = D[0][0]
     best_match_idx = I[0][0]
     
-    logger.debug(f"Similarity score: {similarity}")
+    logger.info(f"Similarity score: {similarity}")
     
     if similarity >= SIMILARITY_THRESHOLD:
         best_prompt = prompts[best_match_idx]

@@ -45,4 +45,4 @@ alternative = [
     "I see."
 ]
 
-SIMILARITY_THRESHOLD = 0.75
+SIMILARITY_THRESHOLD = 0.70

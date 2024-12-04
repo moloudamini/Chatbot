@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useRef,
-  useEffect,
-  ReactNode,
-} from "react";
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 //Message interface
 interface Message {
@@ -21,8 +15,8 @@ interface ChatResponse {
 //ChatBotContextProps interface
 interface ChatBotContextProps {
   messages: Message[];
-  input: string;
-  setInput: React.Dispatch<React.SetStateAction<string>>;
+  inputText: string;
+  setInputText: React.Dispatch<React.SetStateAction<string>>;
   sendMessage: () => void;
   chatOpen: boolean;
   setChatOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,22 +56,12 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
   children,
 }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
-  const [input, setInput] = useState("");
+  const [inputText, setInputText] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
 
   //Toggle dark mode
   useEffect(() => {
@@ -86,22 +70,22 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
 
   //Send message
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!inputText.trim()) return;
     //User message object
     const userMessage: Message = {
       sender: "user",
-      text: input,
+      text: inputText,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    setInputText("");
     setIsLoading(true);
 
     //Prepare data to send to the API
     try {
       const formData = new FormData();
-      formData.append("message", input);
+      formData.append("message", inputText);
 
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/chat`,
@@ -177,7 +161,7 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
 
   //Add an emoji
   const addEmojiToInput = (emoji: { native: string }) => {
-    setInput((prevInput) => prevInput + emoji.native);
+    setInputText((prevInput) => prevInput + emoji.native);
     setShowEmojiPicker(false);
   };
 
@@ -217,8 +201,8 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
     <ChatBotContext.Provider
       value={{
         messages,
-        input,
-        setInput,
+        inputText,
+        setInputText,
         sendMessage,
         chatOpen,
         setChatOpen,
@@ -235,7 +219,6 @@ export const ChatBotProvider: React.FC<ChatBotProviderProps> = ({
       }}
     >
       {children}
-      <div ref={messagesEndRef} />
     </ChatBotContext.Provider>
   );
 };

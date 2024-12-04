@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useLayoutEffect } from "react";
 import { ChatBotContext } from "../contexts/ChatBotContext";
 import Picker from "@emoji-mart/react";
 
@@ -13,8 +13,8 @@ const ChatBot: React.FC = () => {
   // Destructure all necessary values and functions from the ChatBotContext
   const {
     messages,
-    input,
-    setInput,
+    inputText,
+    setInputText,
     sendMessage,
     chatOpen,
     setChatOpen,
@@ -29,6 +29,12 @@ const ChatBot: React.FC = () => {
     exportConversation,
     formatTimestamp,
   } = chatBotContext;
+
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useLayoutEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <>
@@ -195,6 +201,7 @@ const ChatBot: React.FC = () => {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         {/* Chat Input Container: Contains the input field and send button and emoji */}
@@ -216,8 +223,8 @@ const ChatBot: React.FC = () => {
               autoComplete="off"
               autoFocus
               className="chat-input"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
               data-testid="chat-input"
             />
             <div

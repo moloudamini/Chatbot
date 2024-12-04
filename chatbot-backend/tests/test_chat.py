@@ -30,17 +30,17 @@ def test_preprocess_input():
 # Test for exact match
 def test_get_response_exact_match():
     response = get_response("hello")
-    assert response in prompts_to_replies["hello"], f"Response '{response}' not in expected replies for 'hello'"
+    assert response in prompts_to_replies["hello"], f"Response '{response}' in expected replies for 'hello'"
 
 # Test for semantically similar input
 def test_get_response_semantic_match():
     user_input = "Can you tell me a story?"
     response = get_response(user_input)
-    assert response in prompts_to_replies["tell me a story"], f"Response '{response}' not in expected replies for 'tell me a story'"
+    assert response in prompts_to_replies["tell me a story"], f"Response '{response}' in expected replies for 'tell me a story'"
 
     user_input = "Are you human?"
     response = get_response(user_input)
-    assert response in prompts_to_replies["are you human"], f"Response '{response}' not in expected replies for 'are you human'"
+    assert response in prompts_to_replies["are you human"], f"Response '{response}' in expected replies for 'are you human'"
 
 # Test for no suitable match 
 def test_get_response_no_match():
@@ -53,19 +53,19 @@ def test_api_chat_valid():
     response = client.post("/api/chat", data={"message": "hello"})
     assert response.status_code == 200
     assert response.json()["response"] in prompts_to_replies["hello"], \
-        f"API response '{response.json()['response']}' not in expected replies for 'hello'"
+        f"API response '{response.json()['response']}' in expected replies for 'hello'"
 
 # Test API/chat with semantically similar message
 def test_api_chat_semantic_message():
     response = client.post("/api/chat", data={"message": "Can you tell me a story?"})
     assert response.status_code == 200
     assert response.json()["response"] in prompts_to_replies["tell me a story"], \
-        f"API response '{response.json()['response']}' not in expected replies for 'tell me a story'"
+        f"API response '{response.json()['response']}' in expected replies for 'tell me a story'"
 
     response = client.post("/api/chat", data={"message": "Are you human?"})
     assert response.status_code == 200
     assert response.json()["response"] in prompts_to_replies["are you human"], \
-        f"API response '{response.json()['response']}' not in expected replies for 'are you human'"
+        f"API response '{response.json()['response']}' in expected replies for 'are you human'"
 
 # Test API/chat with no matching 
 def test_api_chat_no_match():
@@ -84,14 +84,14 @@ def test_api_chat_special_characters():
     response = client.post("/api/chat", data={"message": "@#$%^&*()"})
     assert response.status_code == 200
     assert response.json()["response"] in alternative, \
-        f"API response '{response.json()['response']}' not in alternative responses"
+        f"API response '{response.json()['response']}' in alternative responses"
 
 # Test API/chat with numeric 
 def test_api_chat_numeric_message():
     response = client.post("/api/chat", data={"message": "12345"})
     assert response.status_code == 200
     assert response.json()["response"] in alternative, \
-        f"API response '{response.json()['response']}' not in alternative responses"
+        f"API response '{response.json()['response']}' in alternative responses"
 
 # Test API/chat with long message
 def test_api_chat_long_message():
@@ -99,7 +99,7 @@ def test_api_chat_long_message():
     response = client.post("/api/chat", data={"message": long_message})
     assert response.status_code == 200
     assert response.json()["response"] in alternative, \
-        f"API response '{response.json()['response']}' not in alternative responses"
+        f"API response '{response.json()['response']}' in alternative responses"
 
 def test_add_message():
     state = ConversationState()
